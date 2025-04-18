@@ -1,5 +1,6 @@
 package org.example.expert.domain.user.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.annotation.Auth;
 import org.example.expert.domain.common.dto.AuthUser;
@@ -14,6 +15,12 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<Void> changePassword(@RequestParam Long userId, @Valid @RequestBody UserChangePasswordRequest request) {
+        userService.changePassword(userId, request);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/users/{userId}")
     public ResponseEntity<UserResponse> getUser(@PathVariable long userId) {
